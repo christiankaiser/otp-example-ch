@@ -62,7 +62,7 @@ We are now ready to build the graph which will take a bit of time. We also need 
 ```
 cd ~
 java -Xmx16G -Xverify:none -jar otp-1.4.0-SNAPSHOT-shaded.jar "$@" --build graphs/ch
-
+```
 
 ## Run the server
 
