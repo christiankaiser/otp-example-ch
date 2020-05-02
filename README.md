@@ -14,10 +14,10 @@ sudo apt install openjdk-8-jdk openjdk-8-jdk-headless
 
 ## Download the repo
 
-We need git installed to download the repo:
+We need git installed to download the repo and wget to download datasets later on:
 
 ```bash
-sudo apt install git
+sudo apt install git wget
 ```
 
 Create a new directory in your home directory:
@@ -28,10 +28,10 @@ mkdir otp
 cd otp
 ```
 
-and download the repo:
+and clone the repo directly in this directory:
 
 ```bash
-git clone https://github.com/christiankaiser/otp-example-ch.git
+git clone https://github.com/christiankaiser/otp-example-ch.git .
 ```
 
 
@@ -41,6 +41,10 @@ You will find the latest timetable data on [opentransportdata.swiss](https://ope
 
 Place the downloaded file inside the directory `~/otp/graphs/ch` and name it `timetable-ch.gtfs.zip`. You can optionnally include the date of the file in the file name so you know from when the timetable data is; you just need to adapt the file name in all later commands.
 
+```
+cd ~/otp/graphs/ch
+wget -O timetable-ch.gtfs.zip https://opentransportdata.swiss/dataset/6f55f96d-7644-4901-b927-e9cf05a8c7f0/resource/a485003d-2015-42df-ac16-b810e7278629/download/gtfs_fp2020_2020-04-29.zip 
+```
 
 
 ## Get the OpenStreetMap dump for Switzerland
@@ -60,7 +64,7 @@ wget http://download.geofabrik.de/europe/switzerland-latest.osm.pbf
 We are now ready to build the graph which will take a bit of time. We also need approximately 16GB of RAM for the process to complete.
 
 ```
-cd ~
+cd ~/otp
 java -Xmx16G -Xverify:none -jar otp-1.4.0-SNAPSHOT-shaded.jar "$@" --build graphs/ch
 ```
 
@@ -69,6 +73,7 @@ java -Xmx16G -Xverify:none -jar otp-1.4.0-SNAPSHOT-shaded.jar "$@" --build graph
 We can now run the server:
 
 ```
+cd ~/otp
 java -Xmx16G -Xverify:none -jar otp-1.4.0-SNAPSHOT-shaded.jar "$@" --router ch --graphs graphs --server
 ```
 
